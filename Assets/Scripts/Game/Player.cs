@@ -78,7 +78,7 @@ namespace Game
             var cameraTs = cam.transform;
             var canvasTs = canvasName.gameObject.GetComponent<RectTransform>();
             gameObject.transform
-                .ObserveEveryValueChanged(ts => ts.position)
+                .ObserveEveryValueChanged(ts => ts.position, FrameCountType.FixedUpdate)
                 .TakeUntilDestroy(gameObject)
                 .Subscribe(_ => canvasTs.LookAt(cameraTs));
         }

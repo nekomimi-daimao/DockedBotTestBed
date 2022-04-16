@@ -37,24 +37,10 @@ namespace Game
 
         private void InitMaterial(string userName)
         {
-            var hash = userName.GetHashCode();
-            var digit6 = GetPointDigit(hash, 6);
-            var digit5 = GetPointDigit(hash, 5);
-            var digit4 = GetPointDigit(hash, 4);
-            var digit3 = GetPointDigit(hash, 3);
-            var digit2 = GetPointDigit(hash, 2);
-            var digit1 = GetPointDigit(hash, 1);
+            UnityEngine.Random.InitState(userName.GetHashCode());
 
             _material = rend.material;
-            _material.color = Color.HSVToRGB(
-                digit6 * 0.1f + digit5 * 0.01f,
-                digit4 * 0.1f + digit3 * 0.01f,
-                digit2 * 0.1f + digit1 * 0.01f);
-
-            int GetPointDigit(int num, int digit)
-            {
-                return (int)(num / Mathf.Pow(10, digit - 1)) % 10;
-            }
+            _material.color = UnityEngine.Random.ColorHSV(0f, 1f, 0f, 1f, 0.6f, 1f);
 
             gameObject.OnDestroyAsObservable()
                 .Subscribe(_ =>
@@ -77,10 +63,14 @@ namespace Game
             canvasName.worldCamera = cam;
             var cameraTs = cam.transform;
             var canvasTs = canvasName.gameObject.GetComponent<RectTransform>();
+            canvasTs.SetParent(null);
             gameObject.transform
                 .ObserveEveryValueChanged(ts => ts.position, FrameCountType.FixedUpdate)
                 .TakeUntilDestroy(gameObject)
-                .Subscribe(_ => canvasTs.LookAt(cameraTs));
+                .Subscribe(pos =>
+                {
+                    canvasTs.SetPositionAndRotation(pos + Vector3.one, cameraTs.rotation);
+                });
         }
 
         private async UniTask InitController(ControllerBase controller, CancellationToken token)

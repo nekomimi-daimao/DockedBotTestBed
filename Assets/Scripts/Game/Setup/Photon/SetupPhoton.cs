@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Photon.Pun;
@@ -11,9 +12,11 @@ namespace Game.Setup.Photon
     {
         public static async UniTask Setup(Dictionary<string, string> args, GameManager gameManager, CancellationToken token)
         {
+            BackUp(token);
+
             args.TryGetValue("realtime", out var realtime);
             args.TryGetValue("voice", out var voice);
-            args.TryGetValue("roomname", out var roomname);
+            args.TryGetValue("matching", out var roomname);
 
             PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = realtime;
             PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice = voice;
@@ -74,6 +77,18 @@ namespace Game.Setup.Photon
             {
                 Object.Destroy(gameObject);
             }
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        private static async void BackUp(CancellationToken token)
+        {
+            var realtime = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
+            var voice = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice;
+
+            await token.WaitUntilCanceled();
+
+            PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = realtime;
+            PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice = voice;
         }
     }
 }

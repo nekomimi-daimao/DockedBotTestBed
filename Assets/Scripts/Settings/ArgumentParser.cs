@@ -16,7 +16,7 @@ namespace Settings
             Args[nameof(IsBot)] = IsBot().ToString();
         }
 
-        private static bool IsBot()
+        public static bool IsBot()
         {
             var isBot = Application.isBatchMode;
 #if UNITY_SERVER

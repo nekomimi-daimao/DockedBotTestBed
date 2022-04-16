@@ -1,0 +1,16 @@
+{
+    "name": "Setup.Photon",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "PHOTON_UNITY_NETWORKING"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

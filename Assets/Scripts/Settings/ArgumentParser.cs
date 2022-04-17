@@ -12,8 +12,8 @@ namespace Settings
         [RuntimeInitializeOnLoadMethod]
         private static void Parse()
         {
-            Args = ParseArgs();
             Args[nameof(IsBot)] = IsBot().ToString();
+            Args = ParseArgs();
         }
 
         public static bool IsBot()

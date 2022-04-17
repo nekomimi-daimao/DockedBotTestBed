@@ -21,6 +21,8 @@ namespace Game.Setup.Photon
             PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = realtime;
             PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice = voice;
 
+            PhotonNetwork.PrefabPool = new GamePool(gameManager);
+
             PhotonNetwork.ConnectUsingSettings();
 
             await UniTask.WaitUntil(() => PhotonNetwork.IsConnectedAndReady, cancellationToken: token);
@@ -29,9 +31,13 @@ namespace Game.Setup.Photon
 
             await UniTask.WaitUntil(() => PhotonNetwork.InRoom, cancellationToken: token);
 
-            PhotonNetwork.PrefabPool = new GamePool(gameManager);
-
-            var player = PhotonNetwork.Instantiate(null, Vector3.up, Quaternion.identity);
+            var player = PhotonNetwork.Instantiate(
+                null,
+                Vector3.up,
+                Quaternion.identity,
+                0,
+                new object[] { gameManager.Name }
+            );
 
             gameManager.Player = player.GetComponent<Player>();
         }
@@ -58,13 +64,12 @@ namespace Game.Setup.Photon
                 photonRigid.m_SynchronizeVelocity = true;
                 photonRigid.m_SynchronizeAngularVelocity = true;
 
-                if (photonView.ObservedComponents == null)
-                {
-                    photonView.ObservedComponents = new List<Component>();
-                }
+                photonView.ObservedComponents ??= new List<Component>();
                 photonView.ObservedComponents.Clear();
                 photonView.ObservedComponents.Add(photonTransform);
                 photonView.ObservedComponents.Add(photonRigid);
+
+                go.AddComponent<PhotonCallbackHandler>();
             }
 
             public GameObject Instantiate(string prefabId, Vector3 position, Quaternion rotation)

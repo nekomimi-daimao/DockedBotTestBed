@@ -34,7 +34,7 @@ namespace Game
 
             await StartSetup(token);
             await UniTask.WaitUntil(() => Player != null, cancellationToken: token);
-            Player.Init(Name, Controller, token);
+            Player.SetController(Controller, token);
         }
 
         // private UniTask SetupXXX(Dictionary<string, string> args, GameManager gameManager, CancellationToken token)

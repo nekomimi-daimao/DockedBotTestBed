@@ -28,10 +28,14 @@ namespace Game
 
         #region Initialize
 
-        public void Init(string userName, ControllerBase controller, CancellationToken token)
+        public void SetName(string playerName)
         {
-            InitMaterial(userName);
-            InitCanvas(userName);
+            InitMaterial(playerName);
+            InitCanvas(playerName);
+        }
+
+        public void SetController(ControllerBase controller, CancellationToken token)
+        {
             InitController(controller, token).Forget();
         }
 
@@ -67,10 +71,7 @@ namespace Game
             gameObject.transform
                 .ObserveEveryValueChanged(ts => ts.position, FrameCountType.FixedUpdate)
                 .TakeUntilDestroy(gameObject)
-                .Subscribe(pos =>
-                {
-                    canvasTs.SetPositionAndRotation(pos + Vector3.one, cameraTs.rotation);
-                });
+                .Subscribe(pos => { canvasTs.SetPositionAndRotation(pos + Vector3.one, cameraTs.rotation); });
         }
 
         private async UniTask InitController(ControllerBase controller, CancellationToken token)
@@ -115,7 +116,7 @@ namespace Game
 
         #region Jump
 
-        private const float JumpForce = 20f;
+        private const float JumpForce = 200f;
         private const float JumpInterval = 0.5f;
 
         private async UniTaskVoid JumpLoop(ControllerBase controller, CancellationToken token)

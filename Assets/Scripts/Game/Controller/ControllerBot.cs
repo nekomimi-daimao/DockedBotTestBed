@@ -6,7 +6,7 @@ namespace Game.Controller
 {
     public class ControllerBot : ControllerBase
     {
-        private const int IntervalSecond = 4;
+        private const int IntervalSecond = 1;
 
         public override void Start()
         {
@@ -16,6 +16,7 @@ namespace Game.Controller
 
         private async UniTaskVoid RandomValue(CancellationToken token)
         {
+            UnityEngine.Random.InitState(new System.Random().Next());
             while (!token.IsCancellationRequested)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(IntervalSecond), cancellationToken: token);

@@ -6,14 +6,17 @@ namespace Settings
 {
     public static class ArgumentParser
     {
-        public static Dictionary<string, string> Args = new();
+        public static readonly Dictionary<string, string> Args = new();
         private const string Prefix = "-";
 
         [RuntimeInitializeOnLoadMethod]
         private static void Parse()
         {
-            Args[nameof(IsBot)] = IsBot().ToString();
-            Args = ParseArgs();
+            Args["isBot"] = IsBot().ToString();
+            foreach (var (key, value) in ParseArgs())
+            {
+                Args[key] = value;
+            }
         }
 
         public static bool IsBot()

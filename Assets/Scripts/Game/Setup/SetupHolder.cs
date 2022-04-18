@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Setup.Photon;
-using Game;
 
 namespace Game.Setup
 {
@@ -12,7 +10,7 @@ namespace Game.Setup
         public static Func<Dictionary<string, string>, GameManager, CancellationToken, UniTask> SDKSetup()
         {
 #if PHOTON_UNITY_NETWORKING
-            return SetupPhoton.Setup;
+            return Photon.SetupPhoton.Setup;
 #endif
 
 #pragma warning disable CS0162

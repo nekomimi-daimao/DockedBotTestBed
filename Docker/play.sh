@@ -1,3 +1,3 @@
 #!/bin/bash
-cd `dirname $0`
-./HeadlessBot
+
+./HeadlessBot -batchmode -nographics $@

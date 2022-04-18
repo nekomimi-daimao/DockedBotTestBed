@@ -1,3 +1,5 @@
+#if PHOTON_UNITY_NETWORKING
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -97,3 +99,5 @@ namespace Game.Setup.Photon
         }
     }
 }
+
+#endif

@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 # Photon
 /[Aa]ssets/[Pp]hoton
+
+# Build
+Docker/Output

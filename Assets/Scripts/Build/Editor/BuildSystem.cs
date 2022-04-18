@@ -15,7 +15,7 @@ namespace Build.Editor
             {
                 return;
             }
-            var output = Path.Combine(dir.FullName, "Output", "HeadlessBot");
+            var output = Path.Combine(dir.FullName, "Docker", "Output", "HeadlessBot");
 
             var buildOption = new BuildPlayerOptions();
             buildOption.scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();

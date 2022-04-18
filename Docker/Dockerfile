@@ -1,11 +1,13 @@
 FROM ubuntu:20.04
 
-#RUN useradd bot
-#USER bot
+RUN useradd bot
+USER bot
 
-COPY /Output/ /root/Output/
-COPY /Docker/play.sh /root/Output/play.sh
+ENV LD_LIBRARY_PATH=/bot/Output
+WORKDIR /bot/Output
 
-WORKDIR /root/
+COPY --chown=bot:bot /play.sh /bot/Output/play.sh
+ENTRYPOINT ["/bot/Output/play.sh"]
 
-#ENTRYPOINT [ "sh", "/root/Output/play.sh" ]
+COPY --chown=bot:bot /Output/ /bot/Output/
+

@@ -1,3 +1,5 @@
+#if PHOTON_UNITY_NETWORKING
+
 using Photon.Pun;
 
 namespace Game.Setup.Photon
@@ -25,3 +27,5 @@ namespace Game.Setup.Photon
         }
     }
 }
+
+#endif

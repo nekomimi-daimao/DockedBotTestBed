@@ -27,7 +27,8 @@ namespace Game.Setup.Photon
 
             PhotonNetwork.ConnectUsingSettings();
 
-            await UniTask.WaitUntil(() => PhotonNetwork.IsConnectedAndReady, cancellationToken: token);
+            await UniTask.WaitUntil(() =>
+                PhotonNetwork.NetworkingClient.State == ClientState.ConnectedToMasterServer, cancellationToken: token);
 
             PhotonNetwork.JoinOrCreateRoom(roomname, new RoomOptions(), TypedLobby.Default);
 

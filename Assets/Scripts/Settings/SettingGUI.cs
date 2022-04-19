@@ -16,7 +16,7 @@ namespace Settings
         {
             if (ArgumentParser.IsBot())
             {
-                SceneManager.LoadScene("Scenes/PlayScene");
+                LoadScene();
                 return;
             }
             loadGame.onClick.AddListener(Load);
@@ -38,7 +38,12 @@ namespace Settings
                 }
                 ArgumentParser.Args[k] = v;
             }
+            LoadScene();
+        }
 
+        private void LoadScene()
+        {
+            Debug.Log($"{nameof(SettingGUI)} {nameof(LoadScene)}");
             SceneManager.LoadScene("Scenes/PlayScene");
         }
     }

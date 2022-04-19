@@ -32,8 +32,11 @@ namespace Game
 
             var token = this.GetCancellationTokenOnDestroy();
 
+            Debug.Log($"{nameof(GameManager)} {nameof(StartSetup)}");
             await StartSetup(token);
+            Debug.Log($"{nameof(GameManager)} Player == null");
             await UniTask.WaitUntil(() => Player != null, cancellationToken: token);
+            Debug.Log($"{nameof(GameManager)} Player != null");
             Player.SetController(Controller, token);
         }
 
